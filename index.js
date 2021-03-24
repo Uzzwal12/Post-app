@@ -1,26 +1,14 @@
 const { ApolloServer } = require("apollo-server")
-const gql = require("graphql-tag")
 const mongoose = require("mongoose")
 const dbConfig = require("./config/default.json")
 const dbUrl = dbConfig.dbUrl
+const typeDefs = require("./graphql/typeDefs")
+const resolvers = require("./graphql/resolvers")
 
 mongoose
 .connect(dbUrl, {useNewUrlParser:true, useUnifiedTopology: true})
 .then(() => console.log("Connected to mongoDb..."))
 .catch((error) => {console.log(error)})
-
-const typeDefs = gql `
-
-	type Query {
-		sayHi: String!
-	}
-`
-
-const resolvers = {
-	Query: {
-		sayHi: () => {return('Hello world')}
-	}
-}
 
 const server = new ApolloServer({
 	typeDefs,
