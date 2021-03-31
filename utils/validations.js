@@ -29,7 +29,7 @@ module.exports.validateRegisterInput = (
   };
 };
 
-module.exports.validateLoginInput = (userName, Password) => {
+module.exports.validateLoginInput = (userName, password) => {
   const errors = {};
 
   if (userName.trim() === "") {
