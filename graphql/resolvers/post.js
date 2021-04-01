@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("apollo-server");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const Post = require("../../models/post");
 const checkAuth = require("../../utils/checkAuth");
@@ -31,6 +31,11 @@ module.exports = {
   Mutation: {
     async createPost(_, { body }, context) {
       const user = checkAuth(context);
+
+      if (body.trim() === "") {
+        throw new Error("Body cannot be empty");
+      }
+
       const newPost = await Post({
         body,
         user: user.id,
@@ -56,6 +61,26 @@ module.exports = {
       } catch (error) {
         throw new Error(error);
       }
+    },
+
+    async likePost(_, { postId }, context) {
+      const { userName } = checkAuth(context);
+
+      const post = await Post.findById(postId);
+
+      if (post) {
+        if (post.likes.find((like) => like.userName === userName)) {
+          post.likes = post.likes.filter((like) => like.userName !== userName);
+        } else {
+          post.likes.push({
+            userName,
+            createdAt: new Date().toISOString(),
+          });
+        }
+
+        await post.save();
+        return post;
+      } else throw new UserInputError("Post not found");
     },
   },
 };
