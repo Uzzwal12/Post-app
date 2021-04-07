@@ -1,8 +1,26 @@
-import './App.css';
+import React from "react";
+import { Container } from "semantic-ui-react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "semantic-ui-css/semantic.min.css";
+import "./App.css";
+
+import MenuBar from "./components/menuBar";
+import Home from "./pages/home";
+import Login from "./pages/login";
+import Register from "./pages/register";
 
 function App() {
   return (
-    <div><h1>Post app</h1></div>
+    <Router>
+      <Container>
+        <MenuBar />
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route exact path="/" component={Home} />
+        </Switch>
+      </Container>
+    </Router>
   );
 }
 
