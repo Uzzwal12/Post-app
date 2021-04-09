@@ -62,7 +62,7 @@ module.exports = {
         confirmPassword
       );
 
-      if (!valid) { 
+      if (!valid) {
         throw new UserInputError("Errors", { errors });
       }
       const user = await User.findOne({
@@ -77,33 +77,29 @@ module.exports = {
       });
 
       if (user) {
-        let errors = {};
-        if (user.username === username) {
-          errors.username = "Username already exists";
-        } else {
-          errors.email = "Email already exists";
-        }
-        throw new UserInputError(
-          errors.username ? errors.username : errors.email
-        );
-      } else {
-        const newUser = new User({
-          username,
-          email,
-          password,
-          createdAt: new Date().toISOString(),
+        throw new UserInputError("Username is taken", {
+          errors: {
+            username: "This username is taken",
+          },
         });
-        password = await bcrypt.hash(password, 10);
-
-        const res = await newUser.save();
-        const token = generateToken(newUser);
-        
-        return {
-          ...res._doc,
-          id: res._id,
-          token,
-        };
       }
+      password = await bcrypt.hash(password, 12);
+
+      const newUser = new User({
+        email,
+        username,
+        password,
+        createdAt: new Date().toISOString(),
+      });
+
+      const res = await newUser.save();
+      const token = generateToken(res._doc);
+
+      return {
+        ...res._doc,
+        id: res._id,
+        token,
+      };
     },
   },
 };
