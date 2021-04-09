@@ -1,13 +1,12 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import gql from "graphql-tag";
+import { gql, useQuery } from "@apollo/client";
 import { Grid } from "semantic-ui-react";
 
 import PostCard from "../components/postCard";
 const Home = () => {
   const {
     loading,
-    data:{ getPosts: posts },
+    data: { getPosts: posts },
   } = useQuery(FETCH_POSTS_QUERY);
 
   return (

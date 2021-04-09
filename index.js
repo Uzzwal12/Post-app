@@ -12,6 +12,7 @@ mongoose
     console.log(error);
   });
 
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,

@@ -62,7 +62,7 @@ module.exports = {
         confirmPassword
       );
 
-      if (!valid) {
+      if (!valid) { 
         throw new UserInputError("Errors", { errors });
       }
       const user = await User.findOne({
@@ -96,9 +96,8 @@ module.exports = {
         password = await bcrypt.hash(password, 10);
 
         const res = await newUser.save();
-
-        const token = generateToken();
-
+        const token = generateToken(newUser);
+        
         return {
           ...res._doc,
           id: res._id,
