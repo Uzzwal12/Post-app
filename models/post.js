@@ -2,18 +2,18 @@ const mongoose = require("mongoose")
 
 const postSchema = mongoose.Schema({
   body: String,
-  userName: String,
+  username: String,
   createdAt: String,
   comments: [
     {
       body: String,
-      userName: String,
+      username: String,
       createdAt: String
     }
   ],
   likes: [
     {
-    	userName: String,
+    	username: String,
       createdAt: String
     }
   ],

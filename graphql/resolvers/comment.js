@@ -6,7 +6,7 @@ const checkAuth = require("../../utils/checkAuth");
 module.exports = {
   Mutation: {
     async createComment(_, { postId, body }, context) {
-      const { userName } = checkAuth(context);
+      const { username } = checkAuth(context);
 
       if (body.trim() === "") {
         throw new UserInputError("Empty comment", {
@@ -20,7 +20,7 @@ module.exports = {
       if (post) {
         post.comments.unshift({
           body,
-          userName,
+          username,
           createdAt: new Date().toISOString(),
         });
 
@@ -30,7 +30,7 @@ module.exports = {
     },
 
     async deleteComment(_, { postId, commentId }, context) {
-      const { userName } = checkAuth(context);
+      const { username } = checkAuth(context);
 
       const post = await Post.findById(postId);
 
@@ -38,7 +38,7 @@ module.exports = {
         // const comment = await Post.findById(commentId);
         // if (!comment) throw new UserInputError("Comment not found");
         const commentIndex = post.comments.findIndex((c) => c.id === commentId);
-        if (post.comments[commentIndex].userName === userName) {
+        if (post.comments[commentIndex].username === username) {
           post.comments.splice(commentIndex, 1);
           await post.save();
           return post;

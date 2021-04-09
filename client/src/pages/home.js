@@ -3,6 +3,7 @@ import { gql, useQuery } from "@apollo/client";
 import { Grid } from "semantic-ui-react";
 
 import PostCard from "../components/postCard";
+
 const Home = () => {
   const {
     loading,
@@ -35,15 +36,15 @@ const FETCH_POSTS_QUERY = gql`
     getPosts {
       id
       body
-      userName
+      username
       createdAt
       likes {
-        userName
+        username
       }
       comments {
         id
         body
-        userName
+        username
         createdAt
       }
       likeCount

@@ -13,7 +13,7 @@ function generateToken(user) {
     {
       id: user.id,
       email: user.email,
-      userName: user.userName,
+      username: user.username,
     },
     SECRET_KEY,
     { expiresIn: "1h" }
@@ -22,14 +22,14 @@ function generateToken(user) {
 
 module.exports = {
   Mutation: {
-    async login(_, { userName, password }) {
-      const { errors, valid } = validateLoginInput(userName, password);
+    async login(_, { username, password }) {
+      const { errors, valid } = validateLoginInput(username, password);
 
       if (!valid) {
         throw new UserInputError("Errors", { errors });
       }
 
-      const user = await User.findOne({ userName });
+      const user = await User.findOne({ username });
       if (!user) {
         errors.general = "User not found";
         throw new UserInputError("User not found", { errors });
@@ -53,10 +53,10 @@ module.exports = {
 
     async register(
       _,
-      { registerInput: { userName, email, password, confirmPassword } }
+      { registerInput: { username, email, password, confirmPassword } }
     ) {
       const { errors, valid } = validateRegisterInput(
-        userName,
+        username,
         email,
         password,
         confirmPassword
@@ -71,24 +71,24 @@ module.exports = {
             email,
           },
           {
-            userName,
+            username,
           },
         ],
       });
 
       if (user) {
         let errors = {};
-        if (user.userName === userName) {
-          errors.userName = "Username already exists";
+        if (user.username === username) {
+          errors.username = "Username already exists";
         } else {
           errors.email = "Email already exists";
         }
         throw new UserInputError(
-          errors.userName ? errors.userName : errors.email
+          errors.username ? errors.username : errors.email
         );
       } else {
         const newUser = new User({
-          userName,
+          username,
           email,
           password,
           createdAt: new Date().toISOString(),

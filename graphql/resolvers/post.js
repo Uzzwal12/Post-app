@@ -39,7 +39,7 @@ module.exports = {
       const newPost = await Post({
         body,
         user: user.id,
-        userName: user.userName,
+        username: user.username,
         createdAt: new Date().toISOString(),
       });
 
@@ -52,7 +52,7 @@ module.exports = {
       const user = checkAuth(context);
       try {
         const post = await Post.findById(postId);
-        if (user.userName === post.userName) {
+        if (user.username === post.username) {
           await post.delete();
           return "Post deleted successfully";
         } else {
@@ -64,16 +64,16 @@ module.exports = {
     },
 
     async likePost(_, { postId }, context) {
-      const { userName } = checkAuth(context);
+      const { username } = checkAuth(context);
 
       const post = await Post.findById(postId);
 
       if (post) {
-        if (post.likes.find((like) => like.userName === userName)) {
-          post.likes = post.likes.filter((like) => like.userName !== userName);
+        if (post.likes.find((like) => like.username === username)) {
+          post.likes = post.likes.filter((like) => like.username !== username);
         } else {
           post.likes.push({
-            userName,
+            username,
             createdAt: new Date().toISOString(),
           });
         }

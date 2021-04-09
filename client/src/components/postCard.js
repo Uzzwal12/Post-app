@@ -8,7 +8,7 @@ const PostCard = ({
     id,
     body,
     createdAt,
-    userName,
+    username,
     likeCount,
     commentCount,
     likes,
@@ -23,7 +23,7 @@ const PostCard = ({
           size="mini"
           src="https://react.semantic-ui.com/images/avatar/large/molly.png"
         />
-        <Card.Header>{userName}</Card.Header>
+        <Card.Header>{username}</Card.Header>
         <Card.Meta as={Link} to={`/posts${id}`}>
           {moment(createdAt).fromNow(true)}
         </Card.Meta>
