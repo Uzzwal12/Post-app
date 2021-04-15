@@ -12,7 +12,7 @@ const httpLink = createHttpLink({
   uri: "http://localhost:5000/graphql",
 });
 
-const authLink = setContext(() => {
+const authLink = setContext(() => { //setting token in headers
   const token = localStorage.getItem("jwtToken");
   return {
     headers: {
