@@ -15,10 +15,13 @@ const LikeButton = ({ user, post: { id, likes, likeCount } }) => {
 
   const [likePost] = useMutation(LIKE_POST_MUTATION, {
     variables: { postId: id },
+    onError(err) {
+      return err
+    },
   });
 
   const likeButton = user ? (
-    likes ? (
+    liked ? (
       <Button color="blue">
         <Icon name="heart" />
       </Button>

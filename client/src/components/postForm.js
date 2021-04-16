@@ -13,7 +13,7 @@ const PostForm = () => {
   const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
     variables: values,
     update(proxy, result) {
-      let data = proxy.readQuery({
+      const data = proxy.readQuery({
         query: FETCH_POSTS_QUERY,
       });
 
@@ -31,11 +31,7 @@ const PostForm = () => {
   });
 
   function createPostCallback() {
-    try {
-      createPost();
-    } catch (err) {
-      console.log("Err", err);
-    }
+    createPost();
   }
   return (
     <>

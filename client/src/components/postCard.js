@@ -4,6 +4,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth";
 import LikeButton from "../components/likeButton";
+import DeleteButton from "../components/deleteButton";
 
 const PostCard = ({
   post: {
@@ -27,7 +28,7 @@ const PostCard = ({
           src="https://react.semantic-ui.com/images/avatar/large/molly.png"
         />
         <Card.Header>{username}</Card.Header>
-        <Card.Meta as={Link} to={`/posts${id}`}>
+        <Card.Meta as={Link} to={`/posts/${id}`}>
           {moment(createdAt).fromNow(true)}
         </Card.Meta>
         <Card.Description>{body}</Card.Description>
@@ -43,9 +44,7 @@ const PostCard = ({
           </Label>
         </Button>
         {user && user.username === username && (
-          <Button as="div" color="red" floated="right">
-            <Icon name="trash" style={{ margin: 0 }} />
-          </Button>
+          <DeleteButton postId={id}/>
         )}
       </Card.Content>
     </Card>
