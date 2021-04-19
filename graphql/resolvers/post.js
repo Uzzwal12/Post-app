@@ -36,7 +36,7 @@ module.exports = {
         throw new Error("Body cannot be empty");
       }
 
-      const newPost = await Post({
+      const newPost = new Post({
         body,
         user: user.id,
         username: user.username,

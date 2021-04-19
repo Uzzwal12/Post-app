@@ -35,8 +35,6 @@ module.exports = {
       const post = await Post.findById(postId);
 
       if (post) {
-        // const comment = await Post.findById(commentId);
-        // if (!comment) throw new UserInputError("Comment not found");
         const commentIndex = post.comments.findIndex((c) => c.id === commentId);
         if (post.comments[commentIndex].username === username) {
           post.comments.splice(commentIndex, 1);
