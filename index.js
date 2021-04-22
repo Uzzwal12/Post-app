@@ -12,6 +12,7 @@ mongoose
     console.log(error);
   });
 
+const PORT = process.env.port || 5000;
 
 const server = new ApolloServer({
   typeDefs,
@@ -19,6 +20,9 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req }),
 });
 
-server.listen({ port: 5000 }).then((res) => {
-  console.log(`Server running at ${res.url}`);
-});
+server
+  .listen({ port: PORT })
+  .then((res) => {
+    console.log(`Server running at ${res.url}`);
+  })
+  .catch((err) => console.error(err));
