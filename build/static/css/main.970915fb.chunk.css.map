@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/App.css"],"names":[],"mappings":"AAAA,YACI,uBAAyB,CACzB,iBACJ,CAEA,gBACI,WAAY,CACZ,WACJ","file":"main.970915fb.chunk.css","sourcesContent":[".page-title{\r\n    display: block !important;\r\n    text-align: center;\r\n}\r\n\r\n.form-container{\r\n    width: 500px;\r\n    margin: auto;\r\n}"]}

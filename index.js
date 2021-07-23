@@ -4,6 +4,7 @@ const dbConfig = require("./config/default.json");
 const dbUrl = dbConfig.dbUrl;
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
+const express = require("express")
 
 mongoose
   .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -14,11 +15,20 @@ mongoose
 
 const PORT = process.env.port || 5000;
 
+express().use(path.resolve(__dirname,'build'))
+
+express().get('*',(req,res)=>{
+  res.send(path.resolve(__dirname,'build','index.js'))
+})
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => ({ req }),
 });
+
+
+
+
 
 server
   .listen({ port: PORT })
