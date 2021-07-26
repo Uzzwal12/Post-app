@@ -5,6 +5,8 @@ const dbUrl = dbConfig.dbUrl;
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
 const express = require("express")
+const app = express()
+const path = require("path")
 
 mongoose
   .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -15,10 +17,10 @@ mongoose
 
 const PORT = process.env.port || 5000;
 
-express().use(path.resolve(__dirname,'build'))
+app.use(express.static(path.join(__dirname,'./build')))
 
-express().get('*',(req,res)=>{
-  res.send(path.resolve(__dirname,'build','index.js'))
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname,'./build','index.js'))
 })
 const server = new ApolloServer({
   typeDefs,
@@ -36,3 +38,5 @@ server
     console.log(`Server running at ${res.url}`);
   })
   .catch((err) => console.error(err));
+
+  app.listen(3000,()=>"server is running")
